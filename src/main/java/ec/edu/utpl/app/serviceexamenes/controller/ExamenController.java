@@ -26,7 +26,7 @@ public class ExamenController {
 	@Autowired
 	private IExamenService examenService;
 
-	/* -------------- Crear Médico -------------- */
+	/* -------------- Crear Exámen -------------- */
 
 	@PostMapping("/crear_examen")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -35,7 +35,7 @@ public class ExamenController {
 		return examenService.save(examen);
 	}
 
-	/* -------------- Listar Médico -------------- */
+	/* -------------- Listar Exámen -------------- */
 
 	@GetMapping("/listar_examen")
 	public List<Examen> listarExamen() {
@@ -43,7 +43,7 @@ public class ExamenController {
 		return examenService.listAll();
 	}
 
-	/* -------------- Ver Medico -------------- */
+	/* -------------- Ver Exámen -------------- */
 
 	@GetMapping("/examen/{id}")
 	@ResponseStatus(HttpStatus.OK)
@@ -52,7 +52,7 @@ public class ExamenController {
 		return examenService.findById(id);
 	}
 
-	/* -------------- Editar Médico -------------- */
+	/* -------------- Editar Exámen -------------- */
 
 	@PutMapping("/examen/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -68,7 +68,7 @@ public class ExamenController {
 		return examenService.save(examenActual);
 	}
 
-	/* -------------- Eliminar Médico -------------- */
+	/* -------------- Eliminar Exámen -------------- */
 
 	@DeleteMapping("/examen/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
