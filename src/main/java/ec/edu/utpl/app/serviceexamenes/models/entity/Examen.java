@@ -15,11 +15,11 @@ public class Examen implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_examen;
+	private Paciente id_paciente;
 	private String codigo_examen;
 	private String nombre;
+	private String tipo;
 	private String fecha;
-	// private Cita id_cita;
-	private String resultado;
 
 	public Examen() {
 
@@ -31,6 +31,14 @@ public class Examen implements Serializable {
 
 	public void setId_examen(long id_examen) {
 		this.id_examen = id_examen;
+	}
+
+	public Paciente getId_paciente() {
+		return id_paciente;
+	}
+
+	public void setId_paciente(Paciente id_paciente) {
+		this.id_paciente = id_paciente;
 	}
 
 	public String getCodigo_examen() {
@@ -49,20 +57,20 @@ public class Examen implements Serializable {
 		this.nombre = nombre;
 	}
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 	public String getFecha() {
 		return fecha;
 	}
 
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
-	}
-
-	public String getResultado() {
-		return resultado;
-	}
-
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
 	}
 
 	private static final long serialVersionUID = 1L;

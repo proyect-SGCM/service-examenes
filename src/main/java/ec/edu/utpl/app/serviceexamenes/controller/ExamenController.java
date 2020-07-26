@@ -1,9 +1,13 @@
 package ec.edu.utpl.app.serviceexamenes.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,10 +50,27 @@ public class ExamenController {
 	/* -------------- Ver Exámen -------------- */
 
 	@GetMapping("/examen/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public Examen verExamen(@PathVariable Long id) {
+	public ResponseEntity<?> verExamen(@PathVariable Long id) {
 
-		return examenService.findById(id);
+		Examen examen = null;
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			examen = examenService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje",
+					"El Examen con el ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
+		if (examen == null) {
+			response.put("mensaje",
+					"El Examen con el ID: ".concat(id.toString().concat(" no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<Examen>(examen, HttpStatus.OK);
 	}
 
 	/* -------------- Editar Exámen -------------- */
@@ -60,10 +81,11 @@ public class ExamenController {
 
 		Examen examenActual = examenService.findById(id);
 
+		examenActual.setId_paciente(examen.getId_paciente());
 		examenActual.setCodigo_examen(examen.getCodigo_examen());
 		examenActual.setNombre(examen.getNombre());
+		examenActual.setTipo(examen.getTipo());
 		examenActual.setFecha(examen.getFecha());
-		examenActual.setResultado(examen.getResultado());
 
 		return examenService.save(examenActual);
 	}
